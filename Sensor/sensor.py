@@ -3,15 +3,18 @@
 #import MySQLdb
 import subprocess
 
-def print_temp():
+# 현재 CPU 온도를 리턴하는 함수
+def cpu_temp():
     # 명령어 실행
     command = "vcgencmd measure_temp"
     result = subprocess.run(command, shell=True, stdout=subprocess.PIPE, text=True)
 
-    # 명령어 리턴값 가져오기
-    print(result)
+    # 명령어 리턴값에서 온도 값만 추출하여 반환
+    temp = float(result.stdout[5:-3])
+    return temp
 
-def db():
+MySQL 연동 테스트용 함수
+def mysql_test():
     # 데이터베이스 연결
     db = MySQLdb.connect(host="localhost", port=3306, user="rpi4", passwd="!#rpi4", db="rpi4")
 
@@ -32,4 +35,5 @@ def db():
     # 데이터베이스 연결 해제(커서도 제거됨)
     db.close()    
 
-print_temp()
+
+print(cpu_temp())
