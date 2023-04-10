@@ -13,7 +13,7 @@ def cpu_temp():
     temp = float(result.stdout[5:-3])
     return temp
 
-MySQL 연동 테스트용 함수
+# MySQL 연동 테스트용 함수
 def mysql_test():
     # 데이터베이스 연결
     db = MySQLdb.connect(host="localhost", port=3306, user="rpi4", passwd="!#rpi4", db="rpi4")
