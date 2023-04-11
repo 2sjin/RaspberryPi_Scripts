@@ -1,6 +1,6 @@
 #!usr/bin/python
 
-#import MySQLdb
+import MySQLdb
 import subprocess
 
 # 현재 CPU 온도를 리턴하는 함수
@@ -21,19 +21,24 @@ def mysql_test():
     # 커서 생성
     cursor = db.cursor()
 
-    # 커서로 SQL 데이터 조작
-    cursor.execute("select * from sensor_log")
+    # 커서로 SQL 데이터 조작(INSERT)
+    cursor.execute(f"INSERT INTO sensor_log VALUES(now(), {cpu_temp()})")
+
+    # 커서로 SQL 데이터 조작(SELECT)
+    cursor.execute("SELECT * FROM sensor_log")
 
     # 커서로 SELECT한 데이터 전체 출력
     for data in cursor.fetchall():
         print(data)
+        
+    # 데이터베이스 커밋
+    db.commit()
 
-    # 커밋/롤백(단순 SELECT에서는 불필요)
-    # db.commit()
+    # 데이터베이스 롤백
     # db.rollback()
 
     # 데이터베이스 연결 해제(커서도 제거됨)
     db.close()    
 
 
-print(cpu_temp())
+mysql_test()
