@@ -1,8 +1,8 @@
 #!usr/bin/python3
 
 from measure import *
+from sensor import *
 import MySQLdb
-
 
 # 모든 데이터를 SELECT 하는 함수
 def select_all(cur):
@@ -24,7 +24,8 @@ def mysql_connect():
 
     # 커서로 SQL 데이터 조작(INSERT)
     insert_sql = "INSERT INTO sensor_log VALUES(now(), {0}, {1}, {2}, {3}, {4}, {5}, {6})"\
-                   .format(cpu_temp(), sensor_temp(), sensor_hum(), cpu_clock(), gpu_clock(), voltage(), processes())
+                   .format(cpu_temp(), sensor_hum_temp()[0], sensor_hum_temp()[1],
+                           cpu_clock(), gpu_clock(), voltage(), processes())
     cursor.execute(insert_sql)
 
     # 데이터베이스 SELECT 함수 호출(테스트용)
